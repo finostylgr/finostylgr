@@ -17,8 +17,8 @@ const config = {
 		}),
 		prerender: {
 			handleHttpError: ({ path, message }) => {
-				// Photos are optional. Drop a file in static/media/ and it replaces the placeholder.
-				if (path.startsWith('/media/')) return;
+				// Photos are optional. On GitHub Pages the path is /<repo>/media/…
+				if (path.includes('/media/')) return;
 				throw new Error(message);
 			}
 		}
