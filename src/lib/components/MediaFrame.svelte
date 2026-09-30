@@ -3,9 +3,8 @@
 
 	let { src = '', label = '', alt = '', tone = 'light', eager = false, cover = false } = $props();
 	let failed = $state(false);
-	let loaded = $state(false);
 	const fileName = $derived((src || '').split('/').pop() || '—');
-	const showCaption = $derived(!cover);
+	const showCaption = $derived(!cover && failed);
 	const resolved = $derived(!src || /^(https?:|data:)/.test(src) ? src : asset(src));
 </script>
 
@@ -17,12 +16,10 @@
 	</svg>
 	{#if src && !failed}
 		<img
-			class:is-ready={loaded}
 			src={resolved}
 			{alt}
 			loading={eager ? 'eager' : 'lazy'}
 			decoding="async"
-			onload={() => (loaded = true)}
 			onerror={() => (failed = true)}
 		/>
 	{/if}
